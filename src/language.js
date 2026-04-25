@@ -41,6 +41,7 @@ We believe that communication can be smooth, enjoyable, and visually engaging. F
 
 We’re glad you’re here, and we hope you’ll enjoy using our platform!
 `,
+<<<<<<< HEAD
         Send: language === "1" ? "Küldés" : "Send",
         messageFriendToChat: language === "1" ? "Válassz ki egy barátot az üzenetekhez" : "Select a friend to start chatting",
         settingsProfileChange: language === "1" ? "Profilkép módosítása" : "Change profile picture",
@@ -54,6 +55,8 @@ We’re glad you’re here, and we hope you’ll enjoy using our platform!
         register: language === "1" ? "Regisztrálok" : "Register",
         register: language === "1" ? "Regisztrálok" : "Register",
         register: language === "1" ? "Regisztrálok" : "Register",
+=======
+>>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
         register: language === "1" ? "Regisztrálok" : "Register",
         register: language === "1" ? "Regisztrálok" : "Register",
         register: language === "1" ? "Regisztrálok" : "Register",

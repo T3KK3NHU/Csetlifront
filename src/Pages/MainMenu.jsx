@@ -9,9 +9,12 @@ import feketeHaz from "../kepek/feketeHaz.svg";
 import { BASE, bejegyzesek } from "../api";
 import KepFeltoltesCard from "../Components/KepFeltoltescard";
 import KepSzerkesztesCard from "../Components/KepSzerkesztesCard";
+<<<<<<< HEAD
 import Language from "../Components/Lanugage";
 
 
+=======
+>>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
 
 export default function MainMenu() {
     const [lang, setLang] = useState(1);

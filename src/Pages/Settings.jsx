@@ -56,7 +56,11 @@ export default function Settings() {
 
                     {/* BAL OLDAL: Név és Nyelv */}
                     <div className="col-12 col-md-5">
+<<<<<<< HEAD
                         <TextBox title={lang.settingsUserString} placeholder={lang.settingsUserString} setValue={setujFelhasznalonev} />
+=======
+                        <TextBox title={lang.settingsUserString} setValue={setujFelhasznalonev} />
+>>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
                         <Button content={lang.button} onClick={() => {
                             (async () => {
                                 const res = await felhasznalonevModositas(ujfelhasznalonev);
@@ -73,9 +77,15 @@ export default function Settings() {
 
                     {/* JOBB OLDAL: Jelszavak */}
                     <div className="col-12 col-md-5">
+<<<<<<< HEAD
                         <TextBox title={lang.pw} type="password" placeholder={lang.pw} setValue={setJelenlegiJelszo} />
                         <TextBox title={lang.pw1} type="password" placeholder={lang.pw1} setValue={setUjJelszo} />
                         <TextBox title={lang.pw1} type="password" placeholder={lang.pw1} setValue={setUjJelszo} />
+=======
+                        <TextBox title={lang.pw} type="password" setValue={setJelenlegiJelszo} />
+                        <TextBox title={lang.pw1} type="password" setValue={setUjJelszo} />
+                        <TextBox title={lang.pw1} type="password" setValue={setUjJelszo} />
+>>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
                         <Button content={lang.button} onClick={() => {
                             (async () => {
                                 const res = await jelszoModositas(jelenlegiJelszo, ujJelszo);
@@ -87,7 +97,11 @@ export default function Settings() {
                     {/* KÉPFELTÖLTÉS RÉSZ */}
                     <div className="col-12 col-md-8 mt-5">
                         <div className="d-flex flex-column align-items-center">
+<<<<<<< HEAD
                             <h3 className="mb-3">{lang.settingsProfileChange}</h3>
+=======
+                            <h3 className="mb-3">Profilkép módosítása</h3>
+>>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
                             <div className="mb-3" style={{ width: "150px", height: "150px", borderRadius: "50%", border: "2px solid #D95E2E", overflow: "hidden", backgroundColor: "#333" }}>
                                 {imagePreview ? (
                                     <img src={imagePreview} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Preview" />
@@ -96,7 +110,11 @@ export default function Settings() {
                                 )}
                             </div>
                             <input type="file" accept="image/*" className="form-control mb-3 w-auto mx-auto" onChange={saveToPreview} />
+<<<<<<< HEAD
                             <Button content={lang.button} onClick={() => {
+=======
+                            <Button content="Kép mentése" onClick={() => {
+>>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
                                 (async () => {
                                     const res = await uploadImg();
                                     alert(res.message)

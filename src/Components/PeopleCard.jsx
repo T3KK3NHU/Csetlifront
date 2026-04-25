@@ -27,9 +27,15 @@ export default function PeopleCard({ felhasznalonev, image, onClick }) {
         <div
             className="bombo"
             style={{
+<<<<<<< HEAD
                 borderRadius: "20px",
                 padding: "20px",
                 
+=======
+                borderRadius: "45px",
+                padding: "20px",
+                width: "250px",
+>>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
                 textAlign: "center",
                 minHeight: "250px"
             }}
@@ -39,11 +45,18 @@ export default function PeopleCard({ felhasznalonev, image, onClick }) {
                     src={image}
                     style={{
                         width: "100%",
+<<<<<<< HEAD
                         borderRadius: "10px",
                         marginBottom: "15px",
                         maxHeight: "200px",
                         minHeight: "200px",
                         objectFit: "cover"
+=======
+                        borderRadius: "20px",
+                        marginBottom: "15px",
+                        maxHeight: "200px",
+                        minHeight: "200px"
+>>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
                     }}
                 />
             </div>
