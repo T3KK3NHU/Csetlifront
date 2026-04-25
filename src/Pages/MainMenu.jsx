@@ -16,6 +16,7 @@ export default function MainMenu() {
     const [posts, setPosts] = useState([]);
     const [showEditModal, setShowEditModal] = useState(false);
 
+
     useEffect(() => {
         (async () => {
             const data = await bejegyzesek();
@@ -26,18 +27,20 @@ export default function MainMenu() {
             }
         })();
 
+
         () => {
             const language = JSON.parse(localStorage.getItem("language")) || { lang: "0" };
             setLang(useLanguage(language.lang));
         }
     }, []);
 
+
     return (
-        <div className="background p-0 p-md-5"> {/* Csökkentett padding mobilon a kártyák maximális szélessége érdekében */}
+        <div className="background p-md-5">
             <Navbar homeI={feketeHaz} messagesI={messages} settingsI={settings} peopleI={people} />
-            <div className="container-fluid px-0"> {/* d-flex flex-column align-items-center helyett container-fluid a teljes szélességért */}
+            <div className="container-fluid py-5">
                 {posts.map((post) => (
-                    <div key={post.bejegyzes_id} className="w-100 px-2 px-md-3"> {/* Csökkentett padding a kártyák szélénél */}
+                    <div key={post.bejegyzes_id} className="w-100 px-2 px-md-3">
                         <PostCard
                             bejegyzes_id={post.bejegyzes_id}
                             feltoltotkep={post.bejegyzes_kep || null}

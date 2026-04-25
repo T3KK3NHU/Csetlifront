@@ -88,15 +88,30 @@ export async function bejegyzes(tartalom, kep) {
 
 export async function kovetes(felhasznalo_id) {
     const res = await fetch(`${BASE}/kovetes/${felhasznalo_id}`, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" }
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" }
     });
-  
+
+
     const data = await res.json();
     if (!res.ok) return { result: false, message: data.message };
     else return { result: true, message: data.message };
-  }
+}
+
+
+export async function koveti(felhasznalo_id) {
+    const res = await fetch(`${BASE}/kovetes/${felhasznalo_id}`, {
+        credentials: "include",
+        headers: { "Content-Type": "application/json" }
+    });
+
+
+    const data = await res.json();
+    if (!res.ok) return { result: false, message: data.message };
+    else return { result: true, message: data.message };
+}
+
 //KESZ?
 export async function komment(tartalom, bejegyzes_id) {
     const res = await fetch(`${BASE}/komment`, {
@@ -157,14 +172,14 @@ export async function bejegyzesek() {
 
 
 export async function ismerosok() {
-  const res = await fetch(`${BASE}/ismerosok`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-  });
-  const data = await res.json();
-  if (!res.ok) return { result: false, message: data.message };
-  else return { result: true, ismerosok: data.ismerosok };
+    const res = await fetch(`${BASE}/ismerosok`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+    });
+    const data = await res.json();
+    if (!res.ok) return { result: false, message: data.message };
+    else return { result: true, ismerosok: data.ismerosok };
 }
 
 
@@ -236,12 +251,12 @@ export async function deleteKovetes(ismeros_id) {
     else return { result: true, message: data.message };
 }
 
-export async function putBejegyzes(bejegyzes_id,tartalom,kep) {
+export async function putBejegyzes(bejegyzes_id, tartalom, kep) {
     const res = await fetch(`${BASE}/bejegyzes/${bejegyzes_id}`, {
         method: 'PUT',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bejegyzes_id,tartalom,kep })
+        body: JSON.stringify({ bejegyzes_id, tartalom, kep })
     })
     const data = await res.json();
     if (!res.ok) return { result: false, message: data.message };
@@ -271,7 +286,7 @@ export async function emberek() {
     })
     const data = await res.json();
     if (!res.ok) return { result: false, message: data.message };
-    else return { result: true, users:data.users };
+    else return { result: true, users: data.users };
 }
 
 export async function getKommentek(bejegyzes_id) {
