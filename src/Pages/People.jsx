@@ -59,32 +59,32 @@ export default function People() {
   };
 
   return (
-    <div style={{ paddingTop: "90px" }} className="background min-vh-100">
-      <Navbar homeI={simplehaz} messagesI={messages} settingsI={settings} peopleI={people} />
+  <div style={{ paddingTop: "90px" }} className="background min-vh-100">
+    <Navbar
+      homeI={simplehaz}
+      messagesI={messages}
+      settingsI={settings}
+      peopleI={people}
+    />
 
-      <div className="container mt-5">
-<<<<<<< HEAD
-        <div className="row gy-3 text-center">
-          {users.length === 0 && <p>{lang?.peopleEmpty ?? "Nincs senki csak te."}</p>}
-          {users.map((user, index) => (
-            <div key={index} className="col-12 col-sm-6 col-lg-4 col-xl-3">
-              <PeopleCard
-                content={koveti[user.felhasznalo_id]}
-=======
-        <div className="row g-3 justify-content-center">
-          {users.length === 0 && <p>{lang?.peopleEmpty ?? "Nincs senki csak te."}</p>}
-          {users.map((user, index) => (
-            <div key={index} className="col-12 col-md-3">
-              <PeopleCard
-                content={koveti[user.felhasznalo_id] ? "Követve" : "Követés"}
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
-                image={`${BASE}/uploads/${user.kep}`}
-                felhasznalonev={user.felhasznalo_nev}
-                onClick={() => kovetesClick(user.felhasznalo_id)} />
-            </div>
-          ))}
-        </div>
+    <div className="container mt-5">
+      <div className="row g-3 justify-content-center">
+        {users.length === 0 && (
+          <p>{lang?.peopleEmpty ?? "Nincs senki csak te."}</p>
+        )}
+
+        {users.map((user, index) => (
+          <div key={index} className="col-12 col-sm-6 col-lg-4 col-xl-3">
+            <PeopleCard
+              content={koveti[user.felhasznalo_id] ? "Követve" : "Követés"}
+              image={`${BASE}/uploads/${user.kep}`}
+              felhasznalonev={user.felhasznalo_nev}
+              onClick={() => kovetesClick(user.felhasznalo_id)}
+            />
+          </div>
+        ))}
       </div>
     </div>
-  );
+  </div>
+);
 }
