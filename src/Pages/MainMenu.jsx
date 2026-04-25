@@ -9,7 +9,6 @@ import feketeHaz from "../kepek/feketeHaz.svg";
 import { BASE, bejegyzesek } from "../api";
 import KepFeltoltesCard from "../Components/KepFeltoltescard";
 import KepSzerkesztesCard from "../Components/KepSzerkesztesCard";
-import Language from "../Components/Language";
 
 
 

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../style/style.css";
 import { bejegyzes } from '../api';
-<<<<<<< HEAD
 import Language from "../Components/Lanugage";
-
-=======
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
 
 export default function KepFeltoltesCard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,25 +37,19 @@ export default function KepFeltoltesCard() {
         <>
             {/* Új bejegyzés gomb */}
             {isVisible && (
-                <div className="position-fixed" style={{ top: "80px", right: "20px", zIndex: 1050 }}>
+                <div
+                    className="position-fixed"
+                    style={{ top: "80px", right: "20px", zIndex: 1050 }}
+                >
                     <button
-<<<<<<< HEAD
-                        className=" csetliColor2 shadow-lg  gap-2 text-white px-4 py-2"
+                        className="btn csetliColor shadow-lg d-flex align-items-center gap-2 text-white px-4 py-2"
                         style={{ borderRadius: "25px", border: "none" }}
                         onClick={toggleModal}
                     >
-                        {/* új bejegyzes */}
-=======
-                        className="btn btn-csetliColor shadow-lg d-flex align-items-center gap-2 text-white px-4 py-2"
-                        style={{ borderRadius: "25px", border: "none" }}
-                        onClick={toggleModal}
-                    >
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
                         <span className="fw-bold">+ Új bejegyzés</span>
                     </button>
                 </div>
             )}
-
             {isModalOpen && (
                 <div
                     className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
