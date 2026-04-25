@@ -58,21 +58,13 @@ export default function People() {
     }
   };
 
-  return (
+ return (
   <div style={{ paddingTop: "90px" }} className="background min-vh-100">
-    <Navbar
-      homeI={simplehaz}
-      messagesI={messages}
-      settingsI={settings}
-      peopleI={people}
-    />
+    <Navbar homeI={simplehaz} messagesI={messages} settingsI={settings} peopleI={people} />
 
     <div className="container mt-5">
-      <div className="row g-3 justify-content-center">
-        {users.length === 0 && (
-          <p>{lang?.peopleEmpty ?? "Nincs senki csak te."}</p>
-        )}
-
+      <div className="row gy-3 text-center">
+        {users.length === 0 && <p>{lang?.peopleEmpty ?? "Nincs senki csak te."}</p>}
         {users.map((user, index) => (
           <div key={index} className="col-12 col-sm-6 col-lg-4 col-xl-3">
             <PeopleCard
