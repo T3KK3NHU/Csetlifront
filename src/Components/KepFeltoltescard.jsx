@@ -42,7 +42,7 @@ export default function KepFeltoltesCard() {
                     style={{ top: "80px", right: "20px", zIndex: 1050 }}
                 >
                     <button
-                        className="btn csetliColor2 shadow-lg d-flex align-items-center gap-2 text-white px-4 py-2"
+                        className="btn csetliColor shadow-lg d-flex align-items-center gap-2 text-white px-4 py-2"
                         style={{ borderRadius: "25px", border: "none" }}
                         onClick={toggleModal}
                     >

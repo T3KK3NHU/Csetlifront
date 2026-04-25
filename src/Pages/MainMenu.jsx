@@ -11,8 +11,6 @@ import KepFeltoltesCard from "../Components/KepFeltoltescard";
 import KepSzerkesztesCard from "../Components/KepSzerkesztesCard";
 
 
-
-
 export default function MainMenu() {
     const [lang, setLang] = useState(1);
     const [posts, setPosts] = useState([]);
