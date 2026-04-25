@@ -7,7 +7,6 @@ import people from "../kepek/feketePeople.svg";
 import getLanguage from "../language";
 import BaratokCard from "../Components/BaratokCard";
 import UzenetekCard from "../Components/UzenetekCard";
-<<<<<<< HEAD
 import Button from "../Components/Button";
 import {
     ismerosok,
@@ -17,9 +16,6 @@ import {
     szobakeszites,
     adataim,
 } from "../api";
-=======
-import { ismerosok, BASE, uzenetkuldes, getUzenetek, szobakeszites, adataim } from "../api";
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
 
 export default function Messages() {
     const [smerosok, setIsmerosok] = useState([]);
@@ -29,29 +25,18 @@ export default function Messages() {
     const [text, setText] = useState("");
     const [sajatKep, setSajatKep] = useState(null);
     const [kivalasztottIsmerosKep, setKivalasztottIsmerosKep] = useState(null);
-<<<<<<< HEAD
     const [uzenet, setUzenet] = useState([]);
-=======
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
         (async () => {
             const data = await ismerosok();
-<<<<<<< HEAD
 
-=======
-            console.log("ismerosok valasz:", data);
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
             if (data.result && Array.isArray(data.ismerosok)) {
                 setIsmerosok(data.ismerosok);
             } else {
                 setIsmerosok([]);
             }
-<<<<<<< HEAD
-=======
-            console.log("ismerosok ID:", ismerosId);
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
         })();
 
         (async () => {
@@ -62,10 +47,6 @@ export default function Messages() {
         const language = JSON.parse(localStorage.getItem("language")) || { lang: "0" };
         setLang(getLanguage(language.lang));
     }, []);
-<<<<<<< HEAD
-=======
-    const [uzenet, setUzenet] = useState([]);
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
 
     const sortedUzenetek = useMemo(() => {
         const getTime = (m) => {
@@ -77,21 +58,14 @@ export default function Messages() {
                 m?.datum ??
                 m?.kuldve ??
                 m?.letrehozva;
-<<<<<<< HEAD
 
             if (typeof raw === "number") return raw;
 
-=======
-            if (typeof raw === "number") return raw;
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
             if (typeof raw === "string") {
                 const t = Date.parse(raw);
                 if (!Number.isNaN(t)) return t;
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
             const id = typeof m?.id === "number" ? m.id : Number(m?.id);
             return Number.isFinite(id) ? id : 0;
         };
@@ -108,10 +82,7 @@ export default function Messages() {
 
         async function loadMessages() {
             const res = await getUzenetek(szobaId);
-<<<<<<< HEAD
 
-=======
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
             if (res.result) {
                 setUzenet(res.message.uzenetek);
             }
@@ -127,28 +98,18 @@ export default function Messages() {
     const sendMessage = async () => {
         if (!szobaId || !text.trim()) return;
 
-<<<<<<< HEAD
         const currentText = text.trim();
         setText("");
 
         const res = await uzenetkuldes(szobaId, currentText);
 
         if (res.result) {
-=======
-        const currentText = text;
-        setText("");
-
-        const res = await uzenetkuldes(szobaId, currentText);
-        if (res.result) {
-            //frisit hogy jo legyen a sorend
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
             const refreshed = await getUzenetek(szobaId);
             if (refreshed.result) setUzenet(refreshed.message.uzenetek);
         }
     };
 
     return (
-<<<<<<< HEAD
         <>
             <style>
                 {`
@@ -443,99 +404,11 @@ export default function Messages() {
                                         >
                                      </Button>
                                 </div>
-=======
-        <div className="background" style={{ height: 100, overflow: "hidden" }}>
-            <Navbar homeI={simplehaz} messagesI={messages} settingsI={settings} peopleI={people} />
-            <div className="row d-flex flex-column justify-content-start background text-white" style={{ paddingTop: "100px" }}>
-                <div className="d-flex flex-row container">
-                    <div className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex flex-column vh-80 align-items-start m-3 bombo px-4 p-2">
-                        <div className="d-flex flex-row mt-5">
-                            <h4 className="d-flex text-white">Barátok</h4>
-                            <div className="m-1">(  {smerosok.length} )</div>
-                        </div>
-                        {smerosok.length > 0 ? (
-                            smerosok.map((ismeros, index) => (
-                                <BaratokCard
-                                    key={index}
-                                    profilkep={`${BASE}/uploads/${ismeros.kep}`}
-                                    felhasznalonev={ismeros.felhasznalo_nev}
-                                    onClick={async () => {
-                                        console.log("clicked:", ismeros.felhasznalo_id);
-
-                                        setIsmerosId(ismeros.felhasznalo_id);
-                                        setKivalasztottIsmerosKep(ismeros.kep);
-
-                                        const res = await szobakeszites(ismeros.felhasznalo_id);
-
-                                        if (res.result) {
-                                            setSzobaId(res.szobaId);
-                                        } else {
-                                            alert(res.message || "Szerverhiba (szoba létrehozás)")
-                                        }
-                                    }
-                                    }
-                                />
-                            ))
-                        ) : (
-                            <p>Nincsnek barataid :(</p>
-                        )}
-                    </div>
-
-                    <div className="d-flex align-items-start bombo m-3" style={{ height: "815px", overflow: "overlay", scrollbarWidth: "none" }}>
-                        <div className="flex-grow-1 d-flex flex-column h-100 p-3">
-                            {/* ÜZENETEK */}
-                            <div className="flex-grow-1">
-                                {sortedUzenetek.map((msg, i) =>
-                                    msg.felhasznalo_id === ismerosId ? (
-                                        <UzenetekCard
-                                            key={msg.id ?? i}
-                                            balUzenet={msg.szoveg}
-                                            balProfilkep={kivalasztottIsmerosKep ? `${BASE}/uploads/${kivalasztottIsmerosKep}` : undefined}
-                                            jobbProfilkep={sajatKep ? `${BASE}/uploads/${sajatKep}` : undefined}
-                                        />
-
-                                    ) : (
-                                        <UzenetekCard
-                                            key={msg.id ?? i}
-                                            jobbUzenet={msg.szoveg}
-                                            balProfilkep={kivalasztottIsmerosKep ? `${BASE}/uploads/${kivalasztottIsmerosKep}` : undefined}
-                                            jobbProfilkep={sajatKep ? `${BASE}/uploads/${sajatKep}` : undefined}
-                                        />
-                                    )
-                                )}
-                                <div ref={messagesEndRef} />
-                            </div>
-
-                            {/* INPUT */}
-                            <div className="d-flex p-2" style={{ maxWidth: "97%" }}>
-                                <input
-                                    className="form-control"
-                                    placeholder="Üzenet..."
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            e.preventDefault();
-                                            sendMessage();
-                                        }
-                                    }}
-                                />
-                                <button
-                                    className="btn csetliColor me-auto"
-                                    onClick={sendMessage}
-                                >
-                                    Küldés
-                                </button>
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
         </>
-=======
-        </div>
->>>>>>> 047caf79a9b5c2ca89e345688faf037c58cd6784
     );
 }
