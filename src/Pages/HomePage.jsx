@@ -50,7 +50,7 @@ export default function HomePage() {
                     <img src={csetliLogo} alt="csetliLogo" className="img-fluid" style={{ maxWidth: "400px" }} />
                 </div>
 
-                {/* A gombok/linkek jöhetnek alá szépen */}
+                {/* A gombok/linkek */}
                 <div className="mt-4 d-flex flex-column gap-3">
                     <Link to="/registration" className="text-decoration-none csetliColor fs-4">{lang.registration}</Link>
                     <Link to="/login" className="text-decoration-none csetliColor fs-4">{lang.login}</Link>
