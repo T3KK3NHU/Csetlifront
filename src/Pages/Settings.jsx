@@ -99,6 +99,13 @@ export default function Settings() {
             setValue={setUjJelszo}
           />
 
+          <TextBox
+            title={lang.pw1}
+            type="password"
+            placeholder={lang.pw1}
+            setValue={setUjJelszo}
+          />
+
           <Button
             content={lang.button}
             onClick={async () => {
@@ -136,7 +143,7 @@ export default function Settings() {
                 />
               ) : (
                 <div className="d-flex align-items-center h-100 justify-content-center text-secondary">
-                  Nincs kép
+                  {lang.upload}
                 </div>
               )}
             </div>

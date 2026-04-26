@@ -41,7 +41,6 @@ export default function LoginPage() {
                             return;
                         }
                         const res = await belepes(usernameOrEmail, jelszo);
-                        alert(res.message)
                         if (res.result) {
                             // navigálás a bejelentkezésbe
                             navigate("/mainmenu")
@@ -51,11 +50,6 @@ export default function LoginPage() {
 
                 <div className="text-center mt-3">
                     <Link to="/registration" className="csetliColor text-decoration-none">{lang.donthaveaccount}</Link>
-                </div>
-
-                {/* kiszedni ha kész minden */}
-                <div className="text-center mt-2">
-                    <Link to="/mainmenu" className="csetliColor text-decoration-none">vendég fiók</Link>
                 </div>
 
                 <div className="text-center mt-2">

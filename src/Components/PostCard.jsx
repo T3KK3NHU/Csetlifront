@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "../style/style.css";
-import { deleteBejegyzes, BASE, getKommentek } from "../api";
+import { deleteBejegyzes, BASE, getKommentek, emoji, emojiCount, kommentSzam } from "../api";
+import getLanguage from "../language"
 
 export default function PostCard({
   bejegyzes_id,
@@ -9,51 +10,69 @@ export default function PostCard({
   feltoltotkep,
   szoveg,
 }) {
+  // UI state
   const [showMenu, setShowMenu] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [lang, setLang] = useState(getLanguage("1"));
 
+  // Like state
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [commentCount, setCommentCount] = useState(0);
 
   const menuRef = useRef(null);
 
   const MAX_TEXT_LENGTH = 140;
   const isLongText = szoveg && szoveg.length > MAX_TEXT_LENGTH;
 
-  const displayedText =
-    isLongText && !showFullText
-      ? szoveg.slice(0, MAX_TEXT_LENGTH) + "..."
-      : szoveg;
+  const displayedText = isLongText && !showFullText
+    ? szoveg.slice(0, MAX_TEXT_LENGTH) + "..."
+    : szoveg;
 
+  // Fetch emoji count on mount or when bejegyzes_id changes
   useEffect(() => {
-    async function loadComments() {
-      if (!isModalOpen) return;
-
-      const res = await getKommentek(bejegyzes_id);
-
-      if (res.result) {
-        setComments(res.comments);
+    let intervalId;
+    async function fetchEmojiCount() {
+      const result = await emojiCount(bejegyzes_id);
+      if (result.result) {
+        setLikeCount(result.emojiszam);
       } else {
-        alert("Nem tudtuk betölteni a kommenteket: " + res.message);
+        console.error("Failed to fetch emoji count:", result.message);
       }
     }
+    fetchEmojiCount();
+    intervalId = setInterval(fetchEmojiCount, 5000);
+    return () => clearInterval(intervalId);
+  }, [bejegyzes_id]);
 
-    loadComments();
-  }, [isModalOpen, bejegyzes_id]);
+  // Handle like button click
+  async function handleLike() {
+    if (loading) return;
+    setLoading(true);
 
+    const newEmoji = isLiked ? "0" : "1";
+
+    const result = await emoji(bejegyzes_id, newEmoji);
+    if (result.result) {
+      setIsLiked(!isLiked);
+      setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+    } else {
+      console.error("Failed to update emoji:", result.message);
+    }
+    setLoading(false);
+  }
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setShowMenu(false);
-      }
-    }
+    if (!isModalOpen) return;
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    (async () => {
+      const res = await getKommentek(bejegyzes_id);
+      if (res.result) setComments(res.comments);
+    })();
+  }, [isModalOpen, bejegyzes_id]);
 
   useEffect(() => {
     if (!isModalOpen) return;
@@ -66,41 +85,42 @@ export default function PostCard({
     return () => clearInterval(interval);
   }, [isModalOpen, bejegyzes_id]);
 
-  function handleLike() {
-    setIsLiked((prev) => !prev);
-    setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
-  }
+  // Load language preference on mount
+useEffect(() => {
+        // a localstorage-et beolvassuk
+        const language = JSON.parse(localStorage.getItem("language")) || { lang: "0" }
+        setLang(getLanguage(language.lang))
+    }, [])
+
+  // Close menu if clicked outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   async function handleSendComment() {
     if (!newComment.trim()) return;
 
-    try {
-      const res = await fetch(`${BASE}/komment`, {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          tartalom: newComment,
-          bejegyzes_id: bejegyzes_id,
-        }),
-      });
+    await fetch(`${BASE}/komment`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tartalom: newComment,
+        bejegyzes_id,
+      }),
+    });
 
-      const data = await res.json();
+    setNewComment("");
 
-      if (data.result) {
-        setNewComment("");
-
-        const updatedComments = await getKommentek(bejegyzes_id);
-
-        if (updatedComments.result) {
-          setComments(updatedComments.comments);
-        }
-      } else {
-        alert(data.message || "Nem sikerült elküldeni a kommentet.");
-      }
-    } catch (error) {
-      alert(`Szerverhiba: ${error.message}`);
-    }
+    const res = await getKommentek(bejegyzes_id);
+    if (res.result) setComments(res.comments);
   }
 
   const ActionButton = ({ icon, label, count, active, onClick }) => (
@@ -110,30 +130,29 @@ export default function PostCard({
         background: active ? "rgba(255, 55, 35, 0.18)" : "#303030",
         color: active ? "#ff4b3a" : "#e6e6e6",
         borderRadius: "999px",
-        border: active
-          ? "1px solid rgba(255, 75, 58, 0.45)"
-          : "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid rgba(255,255,255,0.08)",
         fontWeight: "bold",
         fontSize: "14px",
+        touchAction: "manipulation",
       }}
       onClick={onClick}
     >
       <span style={{ fontSize: "17px" }}>{icon}</span>
       <span>{label}</span>
-      <span style={{ color: active ? "#ffb0a8" : "#bdbdbd" }}>{count}</span>
+      <span style={{ color: "#bdbdbd" }}>{count}</span>
     </button>
   );
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center m-1 m-md-3 text-white">
+    <div className="d-flex flex-column align-items-center m-2 text-white">
       <div
-        className="bombo p-3 p-md-4 position-relative"
+        className="position-relative"
         style={{
-          width: "95%",
+          width: "100%",
           maxWidth: "900px",
           borderRadius: "30px",
           background: "#252525",
-          boxShadow: "0 12px 35px rgba(0,0,0,0.35)",
+          padding: "20px",
         }}
       >
         {/* MENU */}
@@ -175,43 +194,38 @@ export default function PostCard({
                   window.location.reload();
                 }}
               >
-                <small>Törlés</small>
+                <small>{lang.delete}</small>
               </div>
             </div>
           )}
         </div>
 
-        {/* FEJLÉC */}
-        <div className="d-flex flex-row align-items-center mb-3 pe-5">
+        {/* HEADER */}
+        <div className="d-flex align-items-center mb-3 pe-5">
           <img
+            src={profilkep}
+            alt="profilkep"
             style={{
               width: "42px",
               height: "42px",
-              objectFit: "cover",
               borderRadius: "50%",
+              objectFit: "cover",
             }}
-            src={profilkep}
-            alt="profilkep"
           />
 
-          <div className="ms-2">
-            <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-              {felhasznalonev}
-            </div>
-          </div>
+          <b className="ms-2">{felhasznalonev}</b>
         </div>
 
-        {/* SZÖVEG */}
+        {/* TEXT */}
         {szoveg && (
           <div
             className="mb-3"
             style={{
               background: "#323232",
-              borderRadius: "18px",
-              padding: "14px 16px",
-              fontSize: "16px",
-              lineHeight: "1.45",
+              padding: "12px",
+              borderRadius: "15px",
               wordBreak: "break-word",
+              overflowWrap: "anywhere",
               whiteSpace: "pre-wrap",
             }}
           >
@@ -226,55 +240,42 @@ export default function PostCard({
                 }}
                 onClick={() => setShowFullText(!showFullText)}
               >
-                {showFullText
-                  ? "Kevesebb megjelenítés"
-                  : "Több megjelenítés"}
+                {showFullText ? "Kevesebb megjelenítés" : "Több megjelenítés"}
               </button>
             )}
           </div>
         )}
 
-        {/* KÉP */}
+        {/* IMAGE */}
         {feltoltotkep && (
-          <div
-            className="mb-3"
+          <img
+            src={`${BASE}/uploads/${feltoltotkep}`}
+            alt="poszt"
             style={{
               width: "100%",
-              borderRadius: "22px",
-              overflow: "hidden",
+              maxHeight: "420px",
+              objectFit: "cover",
+              borderRadius: "20px",
             }}
-          >
-            <img
-              src={`${BASE}/uploads/${feltoltotkep}`}
-              alt="poszt"
-              style={{
-                width: "100%",
-                maxHeight: "420px",
-                objectFit: "cover",
-              }}
-            />
-          </div>
+          />
         )}
 
-        {/* ALSÓ RÉSZ */}
-        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-3">
-          <div className="d-flex flex-wrap gap-2">
-            <ActionButton
-              icon={isLiked ? "❤️" : "🤍"}
-              label="Like"
-              count={likeCount}
-              active={isLiked}
-              onClick={handleLike}
-            />
+        {/* ACTION BAR */}
+        <div className="d-flex gap-2 mt-3 flex-wrap">
+          <ActionButton
+            icon={isLiked ? "❤️" : "🤍"}
+            label="Like"
+            count={likeCount}
+            active={isLiked}
+            onClick={handleLike}
+          />
 
-            <ActionButton
-              icon="💬"
-              label="Komment"
-              count={comments.length}
-              active={false}
-              onClick={() => setIsModalOpen(true)}
-            />
-          </div>
+          <ActionButton
+            icon="💬"
+            label="Komment"
+            active={false}
+            onClick={() => setIsModalOpen(true)}
+          />
         </div>
       </div>
 
@@ -283,20 +284,23 @@ export default function PostCard({
         <div
           className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
           style={{
-            backgroundColor: "rgba(0,0,0,0.8)",
+            backgroundColor: "rgba(0,0,0,0.82)",
             zIndex: 9999,
+            backdropFilter: "blur(5px)",
           }}
           onClick={() => setIsModalOpen(false)}
         >
           <div
-            className="position-relative background"
+            className="position-relative"
             style={{
               width: "90%",
               maxWidth: "900px",
               height: "80vh",
               borderRadius: "20px",
-              color: "black",
               overflow: "hidden",
+              background: "#2b2b2b",
+              color: "black",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.55)",
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -314,8 +318,14 @@ export default function PostCard({
             </button>
 
             <div className="d-flex h-100 flex-column flex-md-row">
-              {/* BAL OLDAL */}
-              <div className="col-md-6 p-4 d-flex flex-column border-end border-dark border-opacity-10">
+              {/* BAL OLDAL - POSZT */}
+              <div
+                className="col-md-6 p-4 d-flex flex-column"
+                style={{
+                  background: "#2b2b2b",
+                  borderRight: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
                 <div className="d-flex align-items-center mb-3">
                   <img
                     style={{
@@ -327,7 +337,8 @@ export default function PostCard({
                     src={profilkep}
                     alt="profilkep"
                   />
-                  <b className="ms-2 csetliColor2 rounded-pill py-1 px-2">
+
+                  <b className="ms-2 csetliColor2 rounded-pill py-1 px-3">
                     {felhasznalonev}
                   </b>
                 </div>
@@ -349,7 +360,12 @@ export default function PostCard({
                   {szoveg && (
                     <div
                       className="csetliColor2 p-3 rounded"
-                      style={{ fontSize: "14px" }}
+                      style={{
+                        fontSize: "14px",
+                        wordBreak: "break-word",
+                        overflowWrap: "anywhere",
+                        whiteSpace: "pre-wrap",
+                      }}
                     >
                       {szoveg}
                     </div>
@@ -357,24 +373,32 @@ export default function PostCard({
                 </div>
               </div>
 
-              {/* JOBB OLDAL */}
-              <div className="col-md-6 p-4 d-flex flex-column bg-white bg-opacity-10">
+              {/* JOBB OLDAL - KOMMENTEK */}
+              <div
+                className="col-md-6 p-4 d-flex flex-column"
+                style={{
+                  background: "rgba(255,255,255,0.08)",
+                }}
+              >
                 <div className="text-center mb-3">
                   <span className="csetliColor2 px-4 py-1 rounded-pill fw-bold">
-                    Kommentek
+                    {lang.comments}
                   </span>
                 </div>
 
                 <div
                   className="flex-grow-1 overflow-auto pe-2 no-scroll"
-                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                  style={{
+                    scrollbarWidth: "none",
+                    msOverflowStyle: "none",
+                  }}
                 >
                   <style>{`.no-scroll::-webkit-scrollbar { display: none; }`}</style>
 
                   {comments.length === 0 ? (
                     <div className="h-100 d-flex align-items-center justify-content-center text-center">
                       <span className="csetliColor2 rounded-pill px-3 py-2">
-                        Még nincs komment.
+                        {lang.haveNotComment}
                       </span>
                     </div>
                   ) : (
@@ -390,12 +414,18 @@ export default function PostCard({
                             fontSize: "13px",
                             maxWidth: "85%",
                             wordBreak: "break-word",
+                            overflowWrap: "anywhere",
                           }}
                         >
                           {c.szoveg}
                         </div>
 
-                        <div className="text-muted" style={{ fontSize: "13px" }}>
+                        <div
+                          className="text-muted"
+                          style={{
+                            fontSize: "13px",
+                          }}
+                        >
                           {c.ido}
                         </div>
                       </div>
@@ -419,7 +449,7 @@ export default function PostCard({
                     onClick={handleSendComment}
                     className="btn position-absolute end-0 top-0 me-2"
                   >
-                    Küldés
+                    {lang.Send}
                   </button>
                 </div>
               </div>

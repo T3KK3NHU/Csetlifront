@@ -191,16 +191,28 @@ export async function getUzenetek(ismerosid) {
 }
 
 
-export async function emoji(bejegyzes_id, emoji1, emoji2, emoji3) {
+export async function emoji(bejegyzes_id, emoji1) {
     const res = await fetch(`${BASE}/emoji/${bejegyzes_id}`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bejegyzes_id, emoji1, emoji2, emoji3 })
-    })
+        body: JSON.stringify({ emoji1 }),
+    });
     const data = await res.json();
     if (!res.ok) return { result: false, message: data.message };
     else return { result: true, message: data.message };
+}
+
+export async function emojiCount(bejegyzes_id) {
+    const res = await fetch(`${BASE}/emojiCount/${bejegyzes_id}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    const data = await res.json();
+    if (!res.ok) return { result: false, message: data.message };
+    else return { result: true, emojiszam: data.emojiszam };
 }
 
 export async function kijelentkezes() {
@@ -317,23 +329,23 @@ export async function getKommentek(bejegyzes_id) {
 }
 
 export async function kommentSzam() {
-  const res = await fetch(`${BASE}/kommentSzam`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-  });
-  const data = await res.json();
-  if (!res.ok) return { result: false, message: data.message };
-  else return { result: true, kommentSzam: data.kommentSzam };
+    const res = await fetch(`${BASE}/kommentSzam`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+    });
+    const data = await res.json();
+    if (!res.ok) return { result: false, message: data.message };
+    else return { result: true, kommentSzam: data.kommentSzam };
 }
 
 export async function kommentSzamBejegyzes() {
-  const res = await fetch(`${BASE}/kommentSzamBejegyzes/${bejegyzes_id}`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-  });
-  const data = await res.json();
-  if (!res.ok) return { result: false, message: data.message };
-  else return { result: true, kommentSzam: data.kommentSzam };
+    const res = await fetch(`${BASE}/kommentSzamBejegyzes/${bejegyzes_id}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+    });
+    const data = await res.json();
+    if (!res.ok) return { result: false, message: data.message };
+    else return { result: true, kommentSzam: data.kommentSzam };
 }
