@@ -42,13 +42,13 @@ const InfoContent = () => (
                 <h6 className="fw-bold mb-3">Feed infó</h6>
 
                 <div className="d-flex justify-content-between mb-2">
-                    <span style={{ color: "#cfcfcf" }}>Bejegyzések</span>
-                    <b>{posts.length}</b>
+                    <span className="csetliColor">Bejegyzések</span>
+                    <b className="csetliColor">{posts.length}</b>
                 </div>
 
                 <div className="d-flex justify-content-between mb-2">
-                    <span style={{ color: "#cfcfcf" }}>Kommentek</span>
-                    <b>{commentCount}</b>
+                    <span className="csetliColor">Kommentek</span>
+                    <b className="csetliColor">{commentCount}</b>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@ const InfoContent = () => (
                                 marginRight: "8px",
                             }}
                         />
-                        <span style={{ fontSize: "13px" }}>
+                        <span className="csetliColor" style={{ fontSize: "13px" }}>
                             {post.felhasznalonev}
                         </span>
                     </div>

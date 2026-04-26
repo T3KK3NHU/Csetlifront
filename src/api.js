@@ -326,3 +326,14 @@ export async function kommentSzam() {
   if (!res.ok) return { result: false, message: data.message };
   else return { result: true, kommentSzam: data.kommentSzam };
 }
+
+export async function kommentSzamBejegyzes() {
+  const res = await fetch(`${BASE}/kommentSzamBejegyzes/${bejegyzes_id}`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const data = await res.json();
+  if (!res.ok) return { result: false, message: data.message };
+  else return { result: true, kommentSzam: data.kommentSzam };
+}
