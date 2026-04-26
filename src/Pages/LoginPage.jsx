@@ -31,9 +31,8 @@ export default function LoginPage() {
             {/* A 'w-100' és 'maxWidth' miatt mobilon összehúzódik, de gépen nem lesz túl nagy */}
             <div className="w-100" style={{ maxWidth: "500px" }}>
                 <div className="text-center fs-1 mb-3 csetliColor">{lang.login}</div>
-                <TextBox title={"E-mail vagy felhasználónév"} type={"text"} placeholder={lang.Placeholderemailorusername} value={usernameOrEmail} setValue={setUsernameOrEmail} />
-                <TextBox title={"Jelszó"} type={"password"} placeholder={lang.placeholderpassword} value={jelszo} setValue={setJelszo} />
-
+                <TextBox title={lang.emailorusername} type={"text"} placeholder={lang.Placeholderemailorusername} value={usernameOrEmail} setValue={setUsernameOrEmail} />
+                <TextBox title={lang.password} type={"password"} placeholder={lang.placeholderpassword} value={jelszo} setValue={setJelszo} />
                 <div className="text-center mt-3 csetliColor">
                     <Button content={lang.login} onClick={async () => {
                         if (!usernameOrEmail || !jelszo) {

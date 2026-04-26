@@ -272,7 +272,7 @@ useEffect(() => {
 
           <ActionButton
             icon="💬"
-            label="Komment"
+            label={lang.comments}
             active={false}
             onClick={() => setIsModalOpen(true)}
           />
@@ -437,7 +437,7 @@ useEffect(() => {
                   <input
                     type="text"
                     className="form-control rounded-pill csetliColor2 pe-5"
-                    placeholder="Ide írd a kommentet..."
+                    placeholder={lang.commenthere}
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     onKeyDown={(e) =>

@@ -60,7 +60,9 @@ export default function useLanguage(language) {
         imgselect: language === "1" ? "Nincs kép kiválasztva" : "No image selected",
         imgselectselect: language === "1" ? "📷 Kép kiválasztása" : "📷 Select image",
         whatsonurmind: language === "1" ? "Mi jár a fejedben?" : "What's on your mind?",
-
+        newpost: language === "1" ? "+ Új bejegyzés" : "+ New post",
+        commenthere: language === "1" ? "Ide írd a kommentet..." : "Write your comment here...",
+        saveimage: language === "1" ? "Kép mentése" : "Save image",
 
         register: language === "1" ? "Regisztrálok" : "Register",
         register: language === "1" ? "Regisztrálok" : "Register",

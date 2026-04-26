@@ -156,7 +156,7 @@ export default function Settings() {
             />
 
             <Button
-              content="Kép mentése"
+              content={lang.saveimage}
               onClick={async () => {
                 const res = await uploadImg();
                 alert(res.message);

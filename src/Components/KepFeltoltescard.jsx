@@ -54,7 +54,7 @@ export default function KepFeltoltesCard() {
                         style={{ borderRadius: "25px", border: "none" }}
                         onClick={toggleModal}
                     >
-                        <span className="fw-bold">+ Új bejegyzés</span>
+                        <span className="fw-bold">{lang.newPost}</span>
                     </button>
                 </div>
             )}
