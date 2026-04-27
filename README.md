@@ -35,7 +35,7 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 
 —
 # Design
-!(https://imgur.com/a/1mE3Vtd)
+(https://imgur.com/a/1mE3Vtd)
 
 
 
