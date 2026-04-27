@@ -66,14 +66,14 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 - profilkép feltöltése
 - kliens oldali ellenőrzések
 - backend API-n keresztüli regisztráció
-
+<img width="512" height="214" alt="regisztracio" src="https://github.com/user-attachments/assets/8be327fe-703b-4ee8-ad18-a53fe76bee38" />
 
 
 ### Bejelentkezés
 - bejelentkezés e-maillel vagy felhasználónévvel
 - hitelesítés backend API segítségével
 - sikeres bejelentkezés után átirányítás a főoldalra
-
+<img width="512" height="247" alt="bejelentkezes" src="https://github.com/user-attachments/assets/c3dd5a0d-02b0-4c1e-ac23-48a833c6ed4e" />
 
 
 ### Főoldal / Feed
@@ -82,7 +82,8 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 - hozzászólások és reakciók kezelése
 - új bejegyzés létrehozása modál ablakból
 - mobilbarát információs panel
-
+<img width="512" height="276" alt="main" src="https://github.com/user-attachments/assets/1e9a67a4-e8f7-4080-b609-d38f4ca942b7" />
+<img width="398" height="422" alt="feed" src="https://github.com/user-attachments/assets/5e915488-cbb9-4b75-a6a1-37ef7b23ece5" />
 
 
 ### Bejegyzések
@@ -91,14 +92,14 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 - like / emoji funkció
 - kommentek megjelenítése külön modálban
 - saját bejegyzés törlése
-
+<img width="512" height="245" alt="bejegyzespost" src="https://github.com/user-attachments/assets/515ddb4d-3e2b-4345-9cb6-1935ed8e0748" />
 
 ### Ismerősök / Emberek oldal
 - más felhasználók listázása
 - követés / ismerős hozzáadása
 - követés megszüntetése
 - állapot mentése localStorage-ba
-
+<img width="512" height="248" alt="emberek" src="https://github.com/user-attachments/assets/ca46cfb1-0985-473c-9e94-a21fbbf81a92" />
 
 ### Üzenetek
 - ismerőslista megjelenítése
@@ -107,6 +108,7 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 - új üzenet küldése
 - automatikus frissítés
 - mobilon is használható elrendezés
+<img width="512" height="254" alt="uzenetek" src="https://github.com/user-attachments/assets/9c5baee8-6ccf-4f82-9b88-f38599c34cfe" />
 
 ### Beállítások
 - felhasználónév módosítás
@@ -115,7 +117,7 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 - kijelentkezés
 - fiók törlése
 - nyelv módosítása 
-
+<img width="512" height="247" alt="settings" src="https://github.com/user-attachments/assets/bccf5056-7e74-445e-a8d7-6caaed5669c3" />
 
 ### Nyelvkezelés
 - magyar és angol nyelv támogatása
@@ -264,7 +266,8 @@ kisebb kijelzőkön igazított margók és betűméretek
 mobilbarát üzenetoldal
 rugalmas grid rendszer
 automatikusan méreteződő képek
-
+<img width="241" height="512" alt="setingsrespo" src="https://github.com/user-attachments/assets/feec809f-adb7-401f-8730-baf179fc8172" />
+<img width="273" height="512" alt="mainrespo" src="https://github.com/user-attachments/assets/bb87adf0-0eeb-40f3-9450-4e1ef02524ef" />
 
 
 Ismert fejlesztési lehetőségek
