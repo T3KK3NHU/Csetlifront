@@ -35,7 +35,7 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 
 —
 # Design
-(https://imgur.com/a/1mE3Vtd)
+<img width="512" height="284" alt="figma" src="https://github.com/user-attachments/assets/6403e1d8-c9df-4520-bd2a-a6caec5eb4d8" />
 
 
 
@@ -51,13 +51,13 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 - navigáció regisztrációhoz, bejelentkezéshez
  és a rólunk oldalhoz
 - nyelvválasztó 
-
+<img width="512" height="247" alt="kezdooldal" src="https://github.com/user-attachments/assets/8d972264-2d1e-4ed7-b0a5-2d366728661c" />
 
 
 
 
 ### Rólunk
-
+<img width="512" height="253" alt="rolunk" src="https://github.com/user-attachments/assets/e0d77834-8ee3-4994-8125-9d9ffcbf7204" />
 
 
 
